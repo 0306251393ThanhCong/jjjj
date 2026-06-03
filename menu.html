@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Quán Ăn Ngon </title>
+    <link href="style.css" rel="stylesheet">
+</head>
+<script>
+
+    function showMenu(type, element) {
+        const sections = document.querySelectorAll(".menu-section");
+        const buttons = document.querySelectorAll(".tab-btn");
+
+        sections.forEach(section => {
+            section.style.display = "none";
+        });
+
+        buttons.forEach(btn => {
+            btn.classList.remove("active");
+        });
+
+        document.getElementById(type).style.display = "block";
+
+        element.classList.add("active");
+    }
+
+    window.onload = function () {
+        document.getElementById("bestSeller").style.display = "block";
+    }
+    document.addEventListener("DOMContentLoaded", () => {
+        const sidebarItems = document.querySelectorAll(".sidebar ul li");
+        const mainTitle = document.querySelector(".main-content header h1");
+
+        sidebarItems.forEach(item => {
+            item.addEventListener("click", (e) => {
+                e.preventDefault();
+                sidebarItems.forEach(li => li.classList.remove("active"));
+                item.classList.add("active");
+                const pageName = item.querySelector("a").textContent.trim();
+                mainTitle.textContent = `Quản lý ${pageName.toLowerCase()}`;
+            });
+        });
+
+        const form = document.getElementById("formLienHe");
+
+        form.addEventListener("submit", function (e) {
+
+            e.preventDefault();
+
+            const name = document.getElementById("name").value;
+            const phone = document.getElementById("phone").value;
+            const message = document.getElementById("message").value;
+
+            if (name === "" || phone === "" || message === "") {
+                alert("Vui lòng nhập đầy đủ thông tin!");
+                return;
+            }
+
+            alert("Gửi liên hệ thành công 🎉");
+
+            form.reset();
+
+        });
+        const tableBody = document.querySelector(".product-table tbody");
+
+        tableBody.addEventListener("click", (e) => {
+            const deleteBtn = e.target.closest(".btn-delete");
+            if (!deleteBtn) return;
+
+            const row = deleteBtn.closest("tr");
+            const productName = row.querySelector("td:nth-child(2) strong").textContent;
+
+            if (confirm(`Bạn có chắc chắn muốn xóa món "${productName}" không?`)) {
+                row.remove();
+            }
+        });
+        const btnAdd = document.querySelector(".btn-add");
+
+        btnAdd.addEventListener("click", () => {
+            const name = prompt("Nhập tên món ăn vặt:");
+            if (!name) return;
+
+            const desc = prompt("Nhập mô tả món ăn:");
+            if (!desc) return;
+
+            const price = prompt("Nhập giá tiền (VNĐ):", "25.000");
+            const category = prompt(
+                "Nhập loại món: bestSeller / food / drink",
+                "food"
+            );
+            if (!price) return;
+            const newRow = document.createElement("tr");
+            newRow.innerHTML = `
+            <td><img src="https://via.placeholder.com/60" alt="${name}"></td>
+            <td><strong>${name}</strong></td>
+            <td>${desc}</td>
+            <td class="price">${parseInt(price).toLocaleString('vi-VN')}đ</td>
+            <td>
+                <button class="btn-edit"><i class="fas fa-edit"></i></button>
+                <button class="btn-delete"><i class="fas fa-trash"></i></button>
+            </td>
+        `;
+
+            tableBody.appendChild(newRow);
+        });
+    });
+
+</script>
+
+<body>
+
+    <div class="header">
+      
+            <h1>Quán Ăn Ngon</h1>
+        
+
+        <nav class="header-menu">
+            <a href="index.html">Trang chủ</a>
+            <a href="menu.html">Thực đơn</a>
+            <a href="contact.html">Liên hệ</a>
+        </nav>
+    </div>
+    <section class="hero">
+        <h2>Ăn Là Mê </h2>
+        <p>Chuyên các món ăn hot nhất!!!</p>
+        <a href="#menu" class="btn-order">Xem Thực Đơn</a>
+    </section>
+    <section id="menu" class="menu">
+        
+        <div id="bestSeller" class="menu-section">
+            <h2 class="menu-title">🔥 Món Ngon Bán Chạy</h2>
+
+            <div class="menu-grid">
+                <div class="menu-item">
+    <img src="https://images.unsplash.com/photo-1555126634-323283e090fa?w=800">
+    <h3>Phở Bò</h3>
+    <p>Nước dùng đậm đà, thịt bò mềm ngon</p>
+    <div class="price">45.000đ</div>
+</div>
+
+<div class="menu-item">
+    <img src="https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?w=800">
+    <h3>Gà Rán</h3>
+    <p>Hương vị cay nồng đặc trưng miền Trung</p>
+    <div class="price">40.000đ</div>
+</div>
+
+<div class="menu-item">
+    <img src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=800">
+    <h3>Canh Chua</h3>
+    <p> Đầy đủ thịt và rau</p>
+    <div class="price">20.000đ</div>
+</div>
+
+<div class="menu-item">
+    <img src="https://images.unsplash.com/photo-1617093727343-374698b1b08d?w=800">
+    <h3>Bún Nước Lèo</h3>
+    <p> Thơm ăn kèm gà xé</p>
+    <div class="price">30.000đ</div>
+</div>
+
+<div class="menu-item">
+    <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800">
+    <h3>Bò</h3>
+    <p>Bữa sáng nhanh gọn, đầy năng lượng</p>
+    <div class="price">25.000đ</div>
+</div>
+
+<div class="menu-item">
+    <img src="https://images.unsplash.com/photo-1547592180-85f173990554?w=800">
+    <h3>Cơm Xào Tỏi</h3>
+    <p>Mềm mịn, thơm hành phi</p>
+    <div class="price">35.000đ</div>
+</div>
+
+                <div class="menu-item">
+                    <img
+                        src="https://cdn2.fptshop.com.vn/unsafe/1920x0/filters:format(webp):quality(75)/cach_lam_banh_trang_tron_tac_2_6efea7dc72.png">
+                    <h3>Bánh Tráng Trộn</h3>
+                    <p>Bánh tráng phơi sương, sốt tắc đậm đà</p>
+                    <div class="price">25.000đ</div>
+                </div>
+
+                <div class="menu-item">
+                    <img src="https://bokhothuba.com/wp-content/uploads/2020/03/bo-kho-soi-2.jpg">
+                    <h3>Khô Bò Sợi</h3>
+                    <p>Khô bò cay cay, thơm lừng vị khói</p>
+                    <div class="price">50.000đ</div>
+                </div>
+
+            </div>
+        </div>
+        <div id="food" class="menu-section">
+            <h2 class="menu-title">🍔 Món Ăn</h2>
+
+            <div class="menu-grid">
+                <div class="menu-item">
+    <img src="https://images.unsplash.com/photo-1555126634-323283e090fa?w=800">
+    <h3>Phở Bò</h3>
+    <p>Nước dùng đậm đà, thịt bò mềm ngon</p>
+    <div class="price">45.000đ</div>
+</div>
+
+<div class="menu-item">
+    <img src="https://i0.wp.com/seonkyounglongest.com/wp-content/uploads/2017/08/Bun-Bo-Hue-46.jpg?resize=1000%2C562">
+    <h3>Bún Bò Huế</h3>
+    <p>Hương vị cay nồng đặc trưng miền Trung</p>
+    <div class="price">40.000đ</div>
+</div>
+
+<div class="menu-item">
+    <img src="https://vcdn1-dulich.vnecdn.net/2025/10/21/z7139679302136c1f0d8c2350d7a32-3891-3736-1761024873.jpg?w=1200&h=0&q=100&dpr=1&fit=crop&s=M-gTCg0TJjuQoUz8RDDOpg">
+    <h3>Bánh Mì Thịt</h3>
+    <p>Giòn rụm, đầy đủ thịt và rau</p>
+    <div class="price">20.000đ</div>
+</div>
+
+<div class="menu-item">
+    <img src="https://images.unsplash.com/photo-1617093727343-374698b1b08d?w=800">
+    <h3>Xôi Gà</h3>
+    <p>Xôi dẻo thơm ăn kèm gà xé</p>
+    <div class="price">30.000đ</div>
+</div>
+
+<div class="menu-item">
+    <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800">
+    <h3>Mì Trứng Xúc Xích</h3>
+    <p>Bữa sáng nhanh gọn, đầy năng lượng</p>
+    <div class="price">25.000đ</div>
+</div>
+
+<div class="menu-item">
+    <img src="https://images.unsplash.com/photo-1547592180-85f173990554?w=800">
+    <h3>Bánh Cuốn</h3>
+    <p>Mềm mịn, thơm hành phi</p>
+    <div class="price">35.000đ</div>
+</div>
+
+                
+
+                <div class="menu-item">
+                    <img
+                        src="https://www.pos365.vn/storage/app/media/2022/11/nhung-mon-an-vat-ban-online-chay-nhat/do-an-vat-thit-xien-nuong.jpg">
+                    <h3>Xiên Nướng</h3>
+                    <p>Thơm , mọng nước</p>
+                    <div class="price">7.000đ/Xiên</div>
+                </div>
+                <div class="menu-item">
+                    <img src="https://cdn2.fptshop.com.vn/unsafe/1920x0/filters:format(webp):quality(75)/cach_lam_banh_trang_tron_tac_2_6efea7dc72.png"
+                        alt="Bánh tráng trộn">
+                    <h3>Bánh Tráng Trộn</h3>
+                    <p>Bánh tráng phơi sương, sốt tắc đậm đà</p>
+                    <div class="price">25.000đ</div>
+                </div>
+
+            </div>
+        </div>
+        <div id="drink" class="menu-section">
+            <h2 class="menu-title">🥤 Món Nước</h2>
+
+            <div class="menu-grid">
+                <div class="menu-item">
+    <img src="https://images.unsplash.com/photo-1577805947697-89e18249d767?w=800">
+    <h3>Cà Phê Sữa Đá</h3>
+    <p>Đậm vị cà phê truyền thống</p>
+    <div class="price">20.000đ</div>
+</div>
+
+<div class="menu-item">
+    <img src="https://cdn.tgdd.vn/2021/03/CookProduct/Bac-xiu-la-gi-nguon-goc-va-cach-lam-bac-xiu-thom-ngon-don-gian-tai-nha-0-1200x676.jpg">
+    <h3>Bạc Xỉu</h3>
+    <p>Thơm sữa, ít đắng</p>
+    <div class="price">25.000đ</div>
+</div>
+
+<div class="menu-item">
+    <img src="https://images.unsplash.com/photo-1544145945-f90425340c7e?w=800">
+    <h3>Nước Cam Ép</h3>
+    <p>Cam tươi nguyên chất</p>
+    <div class="price">25.000đ</div>
+</div>
+
+<div class="menu-item">
+    <img src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=800">
+    <h3>Soda Chanh</h3>
+    <p>Mát lạnh, giải khát tức thì</p>
+    <div class="price">22.000đ</div>
+</div>
+
+<div class="menu-item">
+    <img src="https://beptruong.edu.vn/wp-content/uploads/2020/10/tra-dao-cam-sa.jpg">
+    <h3>Trà Đào Cam Sả</h3>
+    <p>Thanh mát, thơm vị đào</p>
+    <div class="price">30.000đ</div>
+</div>
+
+<div class="menu-item">
+    <img src="https://kingcoffee.com.vn/wp-content/uploads/2026/01/cach-pha-matcha-latte.jpg">
+    <h3>Matcha Latte</h3>
+    <p>Vị trà xanh Nhật Bản thơm béo</p>
+    <div class="price">35.000đ</div>
+</div>
+
+                <div class="menu-item">
+                    <img
+                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6iQccVOY9Kdqo2HbTMp4-OoDnEY0jPsUSnQ&s">
+                    <h3>Trà</h3>
+                    <p>Trà thơm mát</p>
+                    <div class="price">20.000đ</div>
+                </div>
+
+                
+                <div class="menu-item">
+                    <img src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=800" alt="Soda chanh">
+                    <h3>Soda Chanh</h3>
+                    <p>Sủi bọt, mát lạnh</p>
+                    <div class="price">22.000đ</div>
+                </div>
+
+            </div>
+        </div>
+        
+    </section>
+
+
+    <footer>
+        <p>&copy; 2026 Góc Đồ Ăn Vặt. Hotline: 0961 234 567 </p>
+    </footer>
+
+
+</body>
+
+</html>

@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Quán Ăn Ngon </title>
+    <link href="style.css" rel="stylesheet">
+</head>
+<script>
+
+    function showMenu(type, element) {
+        const sections = document.querySelectorAll(".menu-section");
+        const buttons = document.querySelectorAll(".tab-btn");
+
+        sections.forEach(s => s.style.display = "none");
+        buttons.forEach(b => b.classList.remove("active"));
+
+        const target = document.getElementById(type);
+
+        if (target) {
+            target.style.display = "block";
+        }
+
+        if (element) {
+            element.classList.add("active");
+        }
+    }
+
+    window.onload = function () {
+        showMenu('bestSeller', document.querySelector(".tab-btn"));
+    };
+    document.addEventListener("DOMContentLoaded", () => {
+        const sidebarItems = document.querySelectorAll(".sidebar ul li");
+        const mainTitle = document.querySelector(".main-content header h1");
+
+        sidebarItems.forEach(item => {
+            item.addEventListener("click", (e) => {
+                e.preventDefault();
+                sidebarItems.forEach(li => li.classList.remove("active"));
+                item.classList.add("active");
+                const pageName = item.querySelector("a").textContent.trim();
+                mainTitle.textContent = `Quản lý ${pageName.toLowerCase()}`;
+            });
+        });
+
+        const form = document.getElementById("formLienHe");
+
+        form.addEventListener("submit", function (e) {
+
+            e.preventDefault();
+
+            const name = document.getElementById("name").value;
+            const phone = document.getElementById("phone").value;
+            const message = document.getElementById("message").value;
+
+            if (name === "" || phone === "" || message === "") {
+                alert("Vui lòng nhập đầy đủ thông tin!");
+                return;
+            }
+
+            alert("Gửi liên hệ thành công 🎉");
+
+            form.reset();
+
+        });
+        const tableBody = document.querySelector(".product-table tbody");
+
+        tableBody.addEventListener("click", (e) => {
+            const deleteBtn = e.target.closest(".btn-delete");
+            if (!deleteBtn) return;
+
+            const row = deleteBtn.closest("tr");
+            const productName = row.querySelector("td:nth-child(2) strong").textContent;
+
+            if (confirm(`Bạn có chắc chắn muốn xóa món "${productName}" không?`)) {
+                row.remove();
+            }
+        });
+        const btnAdd = document.querySelector(".btn-add");
+
+        btnAdd.addEventListener("click", () => {
+            const name = prompt("Nhập tên món ăn vặt:");
+            if (!name) return;
+
+            const desc = prompt("Nhập mô tả món ăn:");
+            if (!desc) return;
+
+            const price = prompt("Nhập giá tiền (VNĐ):", "25.000");
+            const category = prompt(
+                "Nhập loại món: bestSeller / food / drink",
+                "food"
+            );
+            if (!price) return;
+            const newRow = document.createElement("tr");
+            newRow.innerHTML = `
+            <td><img src="https://via.placeholder.com/60" alt="${name}"></td>
+            <td><strong>${name}</strong></td>
+            <td>${desc}</td>
+            <td class="price">${parseInt(price).toLocaleString('vi-VN')}đ</td>
+            <td>
+                <button class="btn-edit"><i class="fas fa-edit"></i></button>
+                <button class="btn-delete"><i class="fas fa-trash"></i></button>
+            </td>
+        `;
+
+            tableBody.appendChild(newRow);
+        });
+    });
+
+</script>
+
+<body>
+
+    <div class="header">
+        
+            
+            <h1> Quán Ăn Ngon</h1>
+        
+
+        <nav class="header-menu">
+
+            <a href="index.html">Trang chủ</a>
+            <a href="menu.html" >Thực đơn </a> 
+            <a href="contact.html">Liên hệ</a>
+
+        </nav>
+    </div>
+
+
+    <section class="hero">
+        <h2>Ăn Là Mê </h2>
+        <p>Chuyên các món ăn  hot nhất!!!</p>
+        <a href="#menu" class="btn-order">Xem Thực Đơn</a>
+    </section>
+    <section id="menu" class="menu">
+       
+        <div id="bestSeller" class="menu-section">
+            <h2 class="menu-title">🔥 Món Ngon Bán Chạy</h2>
+
+            <div class="menu-grid">
+                <div class="menu-item">
+    <img src="https://images.unsplash.com/photo-1577805947697-89e18249d767?w=800">
+    <h3>Cà Phê Sữa Đá</h3>
+    <p>Đậm vị cà phê truyền thống</p>
+    <div class="price">20.000đ</div>
+</div>
+
+<div class="menu-item">
+    <img src="https://cdn.tgdd.vn/2021/03/CookProduct/Bac-xiu-la-gi-nguon-goc-va-cach-lam-bac-xiu-thom-ngon-don-gian-tai-nha-0-1200x676.jpg">
+    <h3>Bạc Xỉu</h3>
+    <p>Thơm sữa, ít đắng</p>
+    <div class="price">25.000đ</div>
+</div>
+
+<div class="menu-item">
+    <img src="https://images.unsplash.com/photo-1544145945-f90425340c7e?w=800">
+    <h3>Nước Cam Ép</h3>
+    <p>Cam tươi nguyên chất</p>
+    <div class="price">25.000đ</div>
+</div>
+
+<div class="menu-item">
+    <img src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=800">
+    <h3>Soda Chanh</h3>
+    <p>Mát lạnh, giải khát tức thì</p>
+    <div class="price">22.000đ</div>
+</div>
+
+<div class="menu-item">
+    <img src="https://beptruong.edu.vn/wp-content/uploads/2020/10/tra-dao-cam-sa.jpg">
+    <h3>Trà Đào Cam Sả</h3>
+    <p>Thanh mát, thơm vị đào</p>
+    <div class="price">30.000đ</div>
+</div>
+
+<div class="menu-item">
+    <img src="https://kingcoffee.com.vn/wp-content/uploads/2026/01/cach-pha-matcha-latte.jpg">
+    <h3>Matcha Latte</h3>
+    <p>Vị trà xanh Nhật Bản thơm béo</p>
+    <div class="price">35.000đ</div>
+</div>
+
+                <div class="menu-item">
+                    <img
+                        src="https://cdn2.fptshop.com.vn/unsafe/1920x0/filters:format(webp):quality(75)/cach_lam_banh_trang_tron_tac_2_6efea7dc72.png">
+                    <h3>Bánh Tráng Trộn</h3>
+                    <p>Bánh tráng phơi sương, sốt tắc đậm đà</p>
+                    <div class="price">25.000đ</div>
+                </div>
+
+                <div class="menu-item">
+                    <img src="https://bokhothuba.com/wp-content/uploads/2020/03/bo-kho-soi-2.jpg">
+                    <h3>Khô Bò Sợi</h3>
+                    <p>Khô bò cay cay, thơm lừng vị khói</p>
+                    <div class="price">50.000đ</div>
+                </div>
+
+            </div>
+        </div>
+        <div id="food" class="menu-section">
+            <h2 class="menu-title">🍔 Món Ăn</h2>
+
+            <div class="menu-grid">
+
+
+                <div class="menu-item">
+                    <img
+                        src="https://www.pos365.vn/storage/app/media/2022/11/nhung-mon-an-vat-ban-online-chay-nhat/do-an-vat-thit-xien-nuong.jpg">
+                    <h3>Xiên Nướng</h3>
+                    <p>Thơm , mọng nước</p>
+                    <div class="price">7.000đ/Xiên</div>
+                </div>
+                <div class="menu-item">
+                    <img src="https://cdn2.fptshop.com.vn/unsafe/1920x0/filters:format(webp):quality(75)/cach_lam_banh_trang_tron_tac_2_6efea7dc72.png"
+                        alt="Bánh tráng trộn">
+                    <h3>Bánh Tráng Trộn</h3>
+                    <p>Bánh tráng phơi sương, sốt tắc đậm đà</p>
+                    <div class="price">25.000đ</div>
+                </div>
+
+            </div>
+        </div>
+        <div id="drink" class="menu-section">
+            <h2 class="menu-title">🥤 Món Nước</h2>
+
+            <div class="menu-grid">
+
+                <div class="menu-item">
+                    <img
+                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6iQccVOY9Kdqo2HbTMp4-OoDnEY0jPsUSnQ&s">
+                    <h3>Trà</h3>
+                    <p>Trà thơm mát</p>
+                    <div class="price">20.000đ</div>
+                </div>
+
+                <div class="menu-item">
+                    <img
+                        src="https://product.hstatic.net/1000288770/product/n__c_t_ng_l_c_r_ng_d__h__ng_d_u_ly_240_ml_1_master.jpg">
+                    <h3>Rồng Đỏ</h3>
+                    <p>Ngọt ngọt thơm vị dâu</p>
+                    <div class="price">10.000đ</div>
+                </div>
+                <div class="menu-item">
+                    <img src="https://images.unsplash.com/photo-1544145945-f90425340c7e?w=800" alt="Nước cam">
+                    <h3>Nước Cam</h3>
+                    <p>Vitamin C tự nhiên</p>
+                    <div class="price">25.000đ</div>
+                </div>
+                <div class="menu-item">
+                    <img src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=800" alt="Soda chanh">
+                    <h3>Soda Chanh</h3>
+                    <p>Sủi bọt, mát lạnh</p>
+                    <div class="price">22.000đ</div>
+                </div>
+
+            </div>
+
+
+        </div>
+        </div>
+        <h2 class="menu-title">Món Ngon </h2>
+        <div class="menu-grid">
+            <div class="menu-item">
+                <img src="https://cdn2.fptshop.com.vn/unsafe/1920x0/filters:format(webp):quality(75)/cach_lam_banh_trang_tron_tac_2_6efea7dc72.png"
+                    alt="Bánh tráng trộn">
+                <h3>Bánh Tráng Trộn</h3>
+                <p>Bánh tráng phơi sương, sốt tắc đậm đà</p>
+                <div class="price">25.000đ</div>
+            </div>
+            <div class="menu-item">
+                <img src="https://bokhothuba.com/wp-content/uploads/2020/03/bo-kho-soi-2.jpg" alt="Khô bò">
+                <h3>Khô Bò Sợi</h3>
+                <p>Khô bò cay cay, thơm lừng vị khói</p>
+                <div class="price">50.000đ</div>
+            </div>
+            <div class="menu-item">
+                <img src="data:image/jpeg;base64,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"
+                    alt="Trà sữa">
+                <h3>Trà Sữa Trân Châu</h3>
+                <p>Trà đậm vị, trân châu dai giòn</p>
+                <div class="price">30.000đ</div>
+            </div>
+           
+            <div class="menu-item">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6iQccVOY9Kdqo2HbTMp4-OoDnEY0jPsUSnQ&s"
+                    alt="trá">
+                <h3> Trà</h3>
+                <p>Trà Thơm</p>
+                <div class="price">20.000đ</div>
+            </div>
+            
+            <div class="menu-item">
+                <img src="https://www.pos365.vn/storage/app/media/2022/11/nhung-mon-an-vat-ban-online-chay-nhat/do-an-vat-thit-xien-nuong.jpg"
+                    alt="Xiên nướng">
+                <h3> Xiên Nướng</h3>
+                <p>Thơm ,mọng nước </p>
+                <div class="price">7.000đ/Xiên</div>
+            </div>
+            <div class="menu-item">
+                <img src="https://www.pos365.vn/storage/app/media/2022/11/nhung-mon-an-vat-ban-online-chay-nhat/an-vat-xoai-dam-coc-dam-chua-ngot.jpg"
+                    alt="Cóc ,ổi ,xoài chua ngọt">
+                <h3> Cóc ,ổi ,xoài chua ngot</h3>
+                <p>Chua Chua ngọt ngọt chắm thêm tí muối nhức cái nách </p>
+                <div class="price">25.000đ</div>
+            </div>
+            <div class="menu-item">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbW3UyGkNvXxcrkpO1Cn6cj_G-Z3CFqVmWlA&s"
+                    alt="Bánh tráng nướng">
+                <h3> Bánh tráng nướng </h3>
+                <p>Giòn giòn béo béo </p>
+                <div class="price">25.000đ</div>
+            </div>
+            <div class="menu-item">
+                <img src="https://jollibee.com.vn/media/catalog/product/cache/9011257231b13517d19d9bae81fd87cc/g/_/g_gi_n_vui_v_-_6_7_2.png"
+                    alt="Gà Rán">
+                <h3> Gà Rán </h3>
+                <p>Giòn giòn béo ngậy </p>
+                <div class="price">20.000đ</div>
+            </div>
+            <div class="menu-item">
+                <img src="https://product.hstatic.net/1000288770/product/n__c_t_ng_l_c_r_ng_d__h__ng_d_u_ly_240_ml_1_master.jpg"
+                    alt="Rồng Đỏ">
+                <h3> Rồng Đỏ</h3>
+                <p>Ngọt Ngọt , Thơm Vị Dâu </p>
+                <div class="price">10.000đ</div>
+            </div>
+            <div class="menu-item">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHpGtcZ5QQDeFZTRwD0GAgKx8ac-NjzP8hMQ&s"
+                    alt="Bánh Cá">
+                <h3> Bánh Cá</h3>
+                <p>Thơm Thơm , béo ngậy </p>
+                <div class="price">15.000đ</div>
+            </div>
+        </div>
+    </section>
+
+
+    <footer>
+        <p>&copy; 2026 Góc Đồ Ăn Vặt. Hotline: 0961 234 567 </p>
+    </footer>
+
+
+</body>
+
+</html>
